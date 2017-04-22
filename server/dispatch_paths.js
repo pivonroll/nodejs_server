@@ -26,6 +26,7 @@ let initialize = function(Dispatcher) {
     function addClientPath(url, relativeClientFilePath) {
         addDispatcherPath(url, Settings.clientFolderPath() + relativeClientFilePath)
     }
+
     addClientPath("/", 'index.html');
     addClientPath("/favicon.ico", '../favicon.ico');
     addClientPath("/compiled/bundle.js", 'compiled/bundle.js');
