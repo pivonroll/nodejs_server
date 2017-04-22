@@ -54,7 +54,7 @@ let Dispatcher = {
     dispatch(request, response) {
         Dispatcher.members.dispatcher.dispatch(request, response);
     }
-}
+};
 
 module.exports = {
     init: Dispatcher.init,

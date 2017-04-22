@@ -37,7 +37,7 @@ let initialize = function(Dispatcher) {
     addClientPath("/app/another_script.js", 'app/another_script.js');
     addClientPath("/app/favicon.ico", '../favicon.ico');
     addClientPath("/app/main.css", 'app/main.css');
-}
+};
 
 module.exports = {
     init: initialize
