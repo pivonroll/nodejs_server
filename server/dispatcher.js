@@ -3,7 +3,8 @@ let Dispatcher = {
         dispatcher: null
     },
     init() {
-        Dispatcher.members.dispatcher = require('httpdispatcher');
+        var HttpDispatcher = require('httpdispatcher');
+        Dispatcher.members.dispatcher = new HttpDispatcher();
         Dispatcher.members.dispatcher.onError(function(req, res) {
             console.log("Page not found. URL: " + req.url);
             res.writeHead(404);

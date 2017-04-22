@@ -21,16 +21,21 @@ let initialize = function(Dispatcher) {
         Dispatcher.addPath(requestPath, createResolveHandlerFunction(relativeResourcePath), createRejectHandlerFunction());
     }
 
-    addDispatcherPath("/", '../client/index.html');
-    addDispatcherPath("/favicon.ico", '../favicon.ico');
-    addDispatcherPath("/compiled/bundle.js", '../client/compiled/bundle.js');
-    addDispatcherPath("/compiled/bundle.js.map", '../client/compiled/bundle.js.map');
-    addDispatcherPath("/app/signin", '../client/app/index.html');
-    addDispatcherPath("/app/compiled/bundle.js", '../client/app/compiled/bundle.js');
-    addDispatcherPath("/app/some_script.js", '../client/app/some_script.js');
-    addDispatcherPath("/app/another_script.js", '../client/app/another_script.js');
-    addDispatcherPath("/app/favicon.ico", '../favicon.ico');
-    addDispatcherPath("/app/main.css", '../client/app/main.css');
+    var Settings = require('./settings.js');
+
+    function addClientPath(url, relativeClientFilePath) {
+        addDispatcherPath(url, Settings.clientFolderPath() + relativeClientFilePath)
+    }
+    addClientPath("/", 'index.html');
+    addClientPath("/favicon.ico", '../favicon.ico');
+    addClientPath("/compiled/bundle.js", 'compiled/bundle.js');
+    addClientPath("/compiled/bundle.js.map", 'compiled/bundle.js.map');
+    addClientPath("/app/signin", 'app/index.html');
+    addClientPath("/app/compiled/bundle.js", 'app/compiled/bundle.js');
+    addClientPath("/app/some_script.js", 'app/some_script.js');
+    addClientPath("/app/another_script.js", 'app/another_script.js');
+    addClientPath("/app/favicon.ico", '../favicon.ico');
+    addClientPath("/app/main.css", 'app/main.css');
 }
 
 module.exports = {

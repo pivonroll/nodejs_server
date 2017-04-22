@@ -66,8 +66,8 @@ let Server = {
     setPort(port) {
         Server.constants.PORT = port;
     }
-}
+};
 
 module.exports = {
     start: Server.start
-}
+};
