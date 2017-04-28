@@ -5,9 +5,10 @@ let Dispatcher = {
     init() {
         var HttpDispatcher = require('httpdispatcher');
         Dispatcher.members.dispatcher = new HttpDispatcher();
-        Dispatcher.members.dispatcher.onError(function(req, res) {
-            console.log("Page not found. URL: " + req.url);
-            res.writeHead(404);
+        Dispatcher.members.dispatcher.onError(function(request, response) {
+            console.log("Page not found. URL: " + request.url);
+            response.writeHead(404);
+            response.end();
         });
     },
     createWrapperRequestHandler(handlerFunction) {
@@ -15,7 +16,7 @@ let Dispatcher = {
             var body = '';
             console.log("Processing " + request.method + " request");
             console.log("Request URL: " + request.url);
-            console.log("Header content: " + JSON.stringify(request.headers));
+            console.log("Header content: " + JSON.stringify(request.headers, null, 2));
             request.on('error', function(err) {
                 console.error(err);
                 response.statusCode = 400;
@@ -24,13 +25,14 @@ let Dispatcher = {
                 body += chunk;
                 // Too much GET data, kill the connection!
                 // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
-                if (body.length > 1e6)
+                if (body.length > 1e6) {
                     request.connection.destroy();
+                }
             }).on('end', function() {
-                // At this point, we have the headers, method, url and body, and can now
+                // At this point, we have the headers, method, url, params and body, and can now
                 // do whatever we need to in order to respond to this request.
                 try {
-                    var respns = handlerFunction(request.url, body);
+                    var respns = handlerFunction(request.url, body, request.params);
                     response.end(respns);
                 } catch (error) {
                     console.log("Error: " + error);

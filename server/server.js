@@ -29,7 +29,6 @@ let Server = {
     },
     handleRequest(request, response) {
         try {
-            console.log(request.url);
             Server.members.requestHandler(request, response);
         } catch (error) {
             console.log(error);
@@ -45,7 +44,7 @@ let Server = {
         Server.members.httpServer = http.createServer(Server.handleRequest);
 
         //Lets start our server
-        Server.members.httpServer.listen(Server.constants.PORT, function(){
+        Server.members.httpServer.listen(Server.constants.PORT, function() {
             //Callback triggered when server is successfully listening. Hurray!
             console.log("Server started on: http://localhost:%s", Server.constants.PORT);
         });
@@ -55,7 +54,6 @@ let Server = {
         var DispatcherPaths = require('./dispatch_paths.js');
 
         Dispatcher.init();
-        DispatcherPaths.init(Dispatcher);
         Server.setPort(port);
         Server.setRequestHandler(Dispatcher.dispatch);
         Server.startIfPortIsAvailable();
