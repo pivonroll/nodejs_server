@@ -5,12 +5,13 @@ let Settings = {
         dispatcherPaths: null
     },
     init() {
-        var Path = require('path');
+        let Path = require('path');
         Settings.members.applicationPath = Path.dirname(process.mainModule.filename) + "/";
     },
     addConfigSection(sectionName, sectionSettingsObject) {
         if (Settings.members.config.hasOwnProperty(sectionName)) {
-            console.error;
+            console.log("Settings already has config section: " + sectionName);
+            return;
         }
         Settings.members.config[sectionName] = sectionSettingsObject;
     },

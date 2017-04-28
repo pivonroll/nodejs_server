@@ -11,8 +11,8 @@ let Server = {
             throw 'Server port is not set';
         }
 
-        var net = require('net');
-        var tempServer = net.createServer();
+        let net = require('net');
+        let tempServer = net.createServer();
 
         tempServer.once('error', function(err) {
             if (err.code === 'EADDRINUSE') {
@@ -31,7 +31,7 @@ let Server = {
         try {
             Server.members.requestHandler(request, response);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     },
     startServer() {
@@ -40,7 +40,7 @@ let Server = {
         }
 
         //Create a server
-        var http = require('http');
+        let http = require('http');
         Server.members.httpServer = http.createServer(Server.handleRequest);
 
         //Lets start our server
@@ -50,10 +50,12 @@ let Server = {
         });
     },
     start(port) {
-        var Dispatcher = require('./dispatcher.js');
-        var DispatcherPaths = require('./dispatch_paths.js');
-
+        let Dispatcher = require('./dispatcher.js');
+        let DispatcherPaths = require('./dispatch_paths.js');
+        let ClientFilePaths = require('./services/client_files_service/client_files_service.js')
         Dispatcher.init();
+        ClientFilePaths.init();
+
         Server.setPort(port);
         Server.setRequestHandler(Dispatcher.dispatch);
         Server.startIfPortIsAvailable();

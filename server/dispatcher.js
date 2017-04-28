@@ -3,7 +3,7 @@ let Dispatcher = {
         dispatcher: null
     },
     init() {
-        var HttpDispatcher = require('httpdispatcher');
+        let HttpDispatcher = require('httpdispatcher');
         Dispatcher.members.dispatcher = new HttpDispatcher();
         Dispatcher.members.dispatcher.onError(function(request, response) {
             console.log("Page not found. URL: " + request.url);
@@ -13,10 +13,10 @@ let Dispatcher = {
     },
     createWrapperRequestHandler(handlerFunction) {
         return function(request, response) {
-            var body = '';
-            console.log("Processing " + request.method + " request");
+            let body = '';
+            // console.log("Processing " + request.method + " request");
             console.log("Request URL: " + request.url);
-            console.log("Header content: " + JSON.stringify(request.headers, null, 2));
+            // console.log("Header content: " + JSON.stringify(request.headers, null, 2));
             request.on('error', function(err) {
                 console.error(err);
                 response.statusCode = 400;
@@ -32,10 +32,10 @@ let Dispatcher = {
                 // At this point, we have the headers, method, url, params and body, and can now
                 // do whatever we need to in order to respond to this request.
                 try {
-                    var respns = handlerFunction(request.url, body, request.params);
+                    let respns = handlerFunction(body, request.params);
                     response.end(respns);
                 } catch (error) {
-                    console.log("Error: " + error);
+                    console.error(error);
                     response.statusCode = 400;
                     response.end();
                 }
@@ -44,12 +44,12 @@ let Dispatcher = {
     },
     addPath(path, onGetFunction, onPostFunction) {
         if (onGetFunction) {
-            var onGetWrapperFunction = Dispatcher.createWrapperRequestHandler(onGetFunction);
+            let onGetWrapperFunction = Dispatcher.createWrapperRequestHandler(onGetFunction);
             Dispatcher.members.dispatcher.onGet(path, onGetWrapperFunction);
         }
 
         if (onPostFunction) {
-            var onPostWrapperFunction = Dispatcher.createWrapperRequestHandler(onPostFunction);
+            let onPostWrapperFunction = Dispatcher.createWrapperRequestHandler(onPostFunction);
             Dispatcher.members.dispatcher.onPost(path, onPostWrapperFunction);
         }
     },

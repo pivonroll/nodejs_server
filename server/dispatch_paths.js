@@ -1,23 +1,23 @@
-var Dispatcher = require('./dispathcer.js');
+var Dispatcher = require('./dispatcher.js');
 
-let initialize = function(Dispatcher) {
-    function createOnGetHandlerFunction(relativeFilePath) {
-        return function(requestURL, requestBody, requestParams) {
-            handlerFunction(requestBody, requestParams);
-        }
+function createOnGetHandlerFunction(handlerFunction) {
+    return function(requestBody, requestParams) {
+        return handlerFunction(requestBody, requestParams);
     }
+}
 
-    function createOnPostHandlerFunction() {
-        return function(requestURL, requestBody, requestParams) {
-            handlerFunction(requestBody, requestParams);
-        }
+function createOnPostHandlerFunction(handlerFunction) {
+    return function(requestBody, requestParams) {
+        return handlerFunction(requestBody, requestParams);
     }
+}
 
+let DispatcherPaths = {
     addPath(requestPath, onGetHandlerFunction, onPostHandlerFunction) {
         Dispatcher.addPath(requestPath, createOnGetHandlerFunction(onGetHandlerFunction), createOnPostHandlerFunction(onPostHandlerFunction));
     }
 };
 
 module.exports = {
-    addPath: addPath
+    addPath: DispatcherPaths.addPath
 };
